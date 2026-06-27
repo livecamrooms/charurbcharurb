@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LiveCam Index — Live Rooms Sorted</title>
+<title>LiveCam Index — Live Rooms Sorted &amp; Linked</title>
 <meta name="description" content="Live cam room index sorted by viewers, tagged by gender, country, and language. 18+ adults only.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="LiveCam Index — Live Rooms">
@@ -496,7 +496,7 @@
 
 <main>
   <div class="intro">
-    <h1>Live cam room index</h1>
+    <h1>Live cam room index — sorted and tagged</h1>
     <p id="introText">Live cam room index, sorted by viewers, tagged by gender, country, and language. Tap any column header to re-sort. Filter by name, tag, or gender.</p>
   </div>
 
@@ -541,7 +541,7 @@
 </main>
 
 <footer>
-  <div>All links are affiliate/revshare links. &nbsp;·&nbsp; <a href="#" onclick="return false">18+ only</a> &nbsp;·&nbsp; All models are 18 years of age or older</div>
+  <div><a href="#" onclick="return false">18+ only</a> &nbsp;·&nbsp; All models are 18 years of age or older</div>
   <div style="margin-top:4px">© <span id="yr"></span> LiveCamIndex</div>
 </footer>
 
@@ -708,7 +708,7 @@
 
   function roomRow(r) {
     const g = GENDER[r.gender] || { label: r.gender || '—', cls: '' };
-    const href = `https://chaturbate.com/${r.username}/?track=revshare&tour=dXPk&campaign=T2CSW&room_type=public`;
+    const href = `https://chaturbate.com/in/?tour=APi5&campaign=T2CSW&track=default&room=${r.username}`;
     const viewers = fmtNum(r.num_users);
     const age = r.age ? r.age : '—';
     const country = r.location ? r.location.toUpperCase() : '—';
