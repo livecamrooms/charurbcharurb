@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LiveCam Index — Live Rooms</title>
-<meta name="description" content="Live cam room index sorted by viewers, tagged by gender, country, and language. All links are revshare. 18+ adults only.">
+<title>LiveCam Index — Live Rooms Sorted</title>
+<meta name="description" content="Live cam room index sorted by viewers, tagged by gender, country, and language. 18+ adults only.">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="LiveCam Index — Live Rooms">
-<meta property="og:description" content="Browse live cam rooms sorted by viewers. Filter by gender, search by name. All links revshare.">
+<meta property="og:description" content="Browse live cam rooms sorted by viewers. Filter by gender, search by name.">
 <meta property="og:type" content="website">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -596,7 +596,7 @@
       allRooms.forEach(r => {
         (r.tags || []).forEach(t => stats.tags.add(t));
         if (r.location) stats.countries.add(r.location);
-        (r.spoken_languages || []).forEach(l => stats.langs.add(l));
+        toArr(r.spoken_languages).forEach(l => stats.langs.add(l));
       });
       buildTagBar();
       updateIntro();
@@ -650,7 +650,7 @@
       if (q) {
         const haystack = [
           r.username, r.display_name, r.subject,
-          r.location, ...(r.spoken_languages || []),
+          r.location, ...toArr(r.spoken_languages),
           ...(r.tags || [])
         ].join(' ').toLowerCase();
         if (!haystack.includes(q)) return false;
@@ -712,7 +712,7 @@
     const viewers = fmtNum(r.num_users);
     const age = r.age ? r.age : '—';
     const country = r.location ? r.location.toUpperCase() : '—';
-    const langs = (r.spoken_languages || []).join(', ') || '—';
+    const langs = toArr(r.spoken_languages).join(', ') || '—';
     const onlineTime = r.seconds_online ? fmtTime(r.seconds_online) : '—';
     const isHD = r.is_hd;
 
@@ -746,6 +746,12 @@
   }
 
   // ── Helpers ────────────────────────────────────────────
+  function toArr(v) {
+    if (!v) return [];
+    if (Array.isArray(v)) return v;
+    return String(v).split(',').map(s => s.trim()).filter(Boolean);
+  }
+
   function fmtNum(n) {
     n = Number(n) || 0;
     if (n >= 1000) return (n / 1000).toFixed(0) + 'k';
